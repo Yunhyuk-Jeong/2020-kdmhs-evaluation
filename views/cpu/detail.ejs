@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ../header %>
+  <body>
+    <%- include ../menu %>
+
+    <!-- input -->
+    <div class="md-form">
+      <input type="text" id="name" class="form-control" value="<%= result.name %>" readonly />
+      <label for="inputLGEx">NAME</label>
+    </div>
+
+    <div class="md-form">
+      <input type="text" id="manufacturer" class="form-control" value="<%= result.manufacturer %>" readonly />
+      <label for="inputLGEx">MANUFACTURER</label>
+    </div>
+
+    <div class="md-form">
+      <input type="text" id="core" class="form-control" value="<%= result.core %>" readonly />
+      <label for="inputLGEx">CORE</label>
+    </div>
+
+    <div class="md-form">
+      <input type="text" id="thread" class="form-control" value="<%= result.thread %>" readonly />
+      <label for="inputLGEx">THREAD</label>
+    </div>
+
+    <div class="md-form">
+      <input type="text" id="releaseDate" class="form-control" value="<%= result.releaseDate %>" readonly />
+      <label for="inputLGEx">RELEASE DATE</label>
+    </div>
+
+    <div class="md-form">
+      <input type="text" id="clock" class="form-control" value="<%= result.clock %>" readonly />
+      <label for="inputLGEx">CLOCK</label>
+    </div>
+
+    <div class="md-form">
+      <input type="text" id="_id" class="form-control" value="<%= result._id %>" readonly />
+      <label for="inputLGEx">ID</label>
+    </div>
+    <button onclick="location.href='/api/cpu'" class="btn btn-blue btn-md">
+      목록
+    </button>
+    <button onclick="location.href='/api/cpu/<%= result._id %>/edit'" class="btn btn-blue btn-md">
+      수정
+    </button>
+    <button id="deleteBtn" class="btn btn-blue btn-md">
+      삭제
+    </button>
+    <%- include ../footer %>
+
+    <script>
+      $(function () {
+        $("#deleteBtn").on("click", () => {
+          const result = confirm("정말로 삭제하시겠습니까?");
+          if (result) {
+            $.ajax({
+              url: "/api/cpu/<%= result._id %>",
+              type: "DELETE",
+            })
+              .done(() => {
+                location.href = "/api/cpu/";
+                console.log("삭제 처리");
+              })
+              .fail((request, status, error) => {
+                alert(request.responseText);
+              });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

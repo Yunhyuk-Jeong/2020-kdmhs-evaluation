@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ../header %>
+  <body>
+    <%- include ../menu %>
+
+    <button type="button" class="btn btn-outline-info waves-effect" onclick="location.href='/api/gpu/new'">
+      등록
+    </button>
+
+    <div class="row row-cols-1 row-cols-md-4">
+      <% result.forEach(gpu => { %>
+      <div class="col mb-4">
+        <!-- Card -->
+        <div class="card">
+          <!--Card image-->
+          <% if(gpu.manufacturer == "Nvidia" || gpu.manufacturer == "nvidia" || gpu.manufacturer == "NVIDIA") { %>
+          <img class="card-img-top" src="https://github.com/Yunhyuk-Jeong/Markdown-Image-Base/blob/master/200711/Nvidia.png?raw=true" alt="Nvidia Card image cap" />
+          <% } %> <% if(gpu.manufacturer == "AMD" || gpu.manufacturer == "Amd" || gpu.manufacturer == "amd") { %>
+          <img class="card-img-top" src="https://github.com/Yunhyuk-Jeong/Markdown-Image-Base/blob/master/200711/AMD.png?raw=true" alt="AMD Card image cap" />
+          <% } %>
+
+          <!--Card content-->
+          <div class="card-body">
+            <!--Title-->
+            <h4 class="card-title"><%= gpu.manufacturer %>, <%= gpu.name %></h4>
+            <!--Text-->
+            <p class="card-text">Release date: <%= gpu.releaseDate %></p>
+            <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+            <button type="button" class="btn btn-blue btn-md" onclick="location.href='/api/gpu/<%= gpu._id %>'">
+              Read more
+            </button>
+          </div>
+        </div>
+        <!-- Card -->
+      </div>
+      <% }); %>
+    </div>
+    <%- include ../footer %>
+  </body>
+</html>

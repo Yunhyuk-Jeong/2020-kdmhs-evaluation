@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../header"); %>
+
+  <body>
+    <%- include("../menu"); %>
+
+    <form id="createForm">
+      <!-- Material input -->
+      <div class="md-form">
+        <input type="text" id="name" class="form-control" required />
+        <label for="title">Input NAME</label>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="manufacturer" class="form-control" required />
+        <label for="title">Input MANUFACTURER (Nvidia, AMD)</label>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="releaseDate" class="form-control" required />
+        <label for="title">Input RELEASE DATE (ex:Q4 2018)</label>
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        저장
+      </button>
+    </form>
+
+    <%- include("../footer"); %>
+
+    <script>
+      $(function () {
+        $("#createForm").submit((event) => {
+          event.preventDefault();
+          const name = $("#name").val();
+          const manufacturer = $("#manufacturer").val();
+          const releaseDate = $("#releaseDate").val();
+
+          $.ajax({
+            url: "/api/gpu",
+            type: "POST",
+            data: { name, manufacturer, releaseDate },
+          })
+            .done(() => {
+              location.href = "/api/gpu";
+            })
+            .fail((request, status, error) => {
+              alert(request.responseText);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

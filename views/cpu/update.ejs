@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ../header %>
+  <body>
+    <%- include ../menu %>
+
+    <form id="updateForm">
+      <!-- input -->
+      <div class="md-form">
+        <input type="text" id="name" class="form-control" value="<%= result.name %>" required />
+        <label for="inputLGEx">NAME</label>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="manufacturer" class="form-control" value="<%= result.manufacturer %>" required />
+        <label for="inputLGEx">MANUFACTURER</label>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="core" class="form-control" value="<%= result.core %>" required />
+        <label for="inputLGEx">CORE</label>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="thread" class="form-control" value="<%= result.thread %>" required />
+        <label for="inputLGEx">THREAD</label>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="releaseDate" class="form-control" value="<%= result.releaseDate %>" required />
+        <label for="inputLGEx">RELEASE DATE</label>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="clock" class="form-control" value="<%= result.clock %>" required />
+        <label for="inputLGEx">CLOCK</label>
+      </div>
+
+      <button type="submit" onclick="location.href='/api/cpu'" class="btn btn-blue btn-md">
+        저장
+      </button>
+    </form>
+    <%- include ../footer %>
+
+    <script>
+      $(function () {
+        $("#updateForm").submit((event) => {
+          event.preventDefault();
+          const name = $("#name").val();
+          const manufacturer = $("#manufacturer").val();
+          const core = $("#core").val();
+          const thread = $("#thread").val();
+          const releaseDate = $("#releaseDate").val();
+          const clock = $("#clock").val();
+
+          $.ajax({
+            url: "/api/cpu/<%= result._id %>",
+            type: "PUT",
+            data: { name, manufacturer, core, thread, releaseDate, clock },
+          })
+            .done(() => {
+              location.href = "/api/cpu/<%= result._id %>";
+              console.log("정상");
+            })
+            .fail((request, status, error) => {
+              alert(request.responseText);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ../header %>
+  <body>
+    <%- include ../menu %>
+
+    <button type="button" class="btn btn-outline-info waves-effect" onclick="location.href='/api/cpu/new'">
+      등록
+    </button>
+
+    <div class="row row-cols-1 row-cols-md-4">
+      <% result.forEach(cpu => { %>
+      <div class="col mb-4">
+        <!-- Card -->
+        <div class="card">
+          <!--Card image-->
+          <% if(cpu.manufacturer == "Intel" || cpu.manufacturer == "intel") { %>
+          <img class="card-img-top" src="https://github.com/Yunhyuk-Jeong/Markdown-Image-Base/blob/master/200711/Intel.png?raw=true" alt="Intel Card image cap" />
+          <% } %> <% if(cpu.manufacturer == "AMD" || cpu.manufacturer == "Amd" || cpu.manufacturer == "amd") { %>
+          <img class="card-img-top" src="https://github.com/Yunhyuk-Jeong/Markdown-Image-Base/blob/master/200711/AMD.png?raw=true" alt="AMD Card image cap" />
+          <% } %>
+
+          <!--Card content-->
+          <div class="card-body">
+            <!--Title-->
+            <h4 class="card-title"><%= cpu.manufacturer %>, <%= cpu.name %></h4>
+            <!--Text-->
+            <p class="card-text"><%= cpu.core %> Cores, <%= cpu.thread %> Thread, @<%= cpu.clock %>GHz</p>
+            <p class="card-text">Release date: <%= cpu.releaseDate %></p>
+            <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+            <button type="button" class="btn btn-blue btn-md" onclick="location.href='/api/cpu/<%= cpu._id %>'">
+              Read more
+            </button>
+          </div>
+        </div>
+        <!-- Card -->
+      </div>
+      <% }); %>
+    </div>
+    <%- include ../footer %>
+  </body>
+</html>

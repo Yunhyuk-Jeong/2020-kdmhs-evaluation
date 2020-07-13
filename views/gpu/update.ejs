@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ../header %>
+  <body>
+    <%- include ../menu %>
+
+    <form id="updateForm">
+      <!-- input -->
+      <div class="md-form">
+        <input type="text" id="name" class="form-control" value="<%= result.name %>" required />
+        <label for="inputLGEx">NAME</label>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="manufacturer" class="form-control" value="<%= result.manufacturer %>" required />
+        <label for="inputLGEx">MANUFACTURER</label>
+      </div>
+
+      <div class="md-form">
+        <input type="text" id="releaseDate" class="form-control" value="<%= result.releaseDate %>" required />
+        <label for="inputLGEx">RELEASE DATE</label>
+      </div>
+
+      <button type="submit" onclick="location.href='/api/gpu'" class="btn btn-blue btn-md">
+        저장
+      </button>
+    </form>
+    <%- include ../footer %>
+
+    <script>
+      $(function () {
+        $("#updateForm").submit((event) => {
+          event.preventDefault();
+          const name = $("#name").val();
+          const manufacturer = $("#manufacturer").val();
+          const releaseDate = $("#releaseDate").val();
+
+          $.ajax({
+            url: "/api/gpu/<%= result._id %>",
+            type: "PUT",
+            data: { name, manufacturer, releaseDate },
+          })
+            .done(() => {
+              location.href = "/api/gpu/<%= result._id %>";
+              console.log("정상");
+            })
+            .fail((request, status, error) => {
+              alert(request.responseText);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>
